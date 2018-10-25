@@ -8,6 +8,10 @@ scalaVersion := "2.11.8"
 // Spark Information
 val sparkVersion = "2.3.1"
 
+assemblyJarName in assembly := "de-training.jar"
+
+test in assembly := {}
+
 // allows us to include spark packages
 resolvers += "bintray-spark-packages" at
   "https://dl.bintray.com/spark-packages/maven/"
@@ -20,14 +24,14 @@ resolvers += "MavenRepository" at
 
 libraryDependencies ++= Seq(
   // spark core
-  "org.apache.spark" %% "spark-core" % sparkVersion,
-  "org.apache.spark" %% "spark-sql" % sparkVersion,
+  "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
 
   // spark-modules
-  "org.apache.spark" %% "spark-graphx" % sparkVersion,
+  "org.apache.spark" %% "spark-graphx" % sparkVersion % "provided",
   // "org.apache.spark" %% "spark-mllib" % sparkVersion,
 
-  "org.apache.spark" %% "spark-hive" % sparkVersion,
+  "org.apache.spark" %% "spark-hive" % sparkVersion % "provided",
 
   // spark packages
   "graphframes" % "graphframes" % "0.5.0-spark2.1-s_2.11",
