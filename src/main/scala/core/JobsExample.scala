@@ -24,6 +24,6 @@ object JobsExample extends Serializable {
 
     println(s"Users after filter ${filteresUsersDF.count()}")
 
-    while (true) {}
+    //while (true) {}
   }
 }
