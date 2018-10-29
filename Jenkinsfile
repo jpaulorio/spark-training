@@ -8,7 +8,7 @@ node () {
 	stage ('Spark Exercises - Build') {
 
     def alljob = env.JOB_NAME.tokenize('/') as String[]
-    def proj_name = alljob[1]
+    def proj_name = alljob[0]
 
     echo "Running ${proj_name}..."
 
