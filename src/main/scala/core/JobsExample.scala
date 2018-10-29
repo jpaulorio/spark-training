@@ -8,7 +8,7 @@ object JobsExample extends Serializable {
 
     val spark = SparkSession
       .builder()
-      .master("local")
+      //.master("local")
       .appName("Data Engineering Capability Development")
       .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
