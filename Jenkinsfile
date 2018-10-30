@@ -28,7 +28,7 @@ timestamps {
 
       if (doDeploy) {
         sh """
-          clusterId=$(aws emr list-clusters --cluster-states RUNNING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2)
+          clusterId=\$(aws emr list-clusters --cluster-states RUNNING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2)
         """
       }
     }
