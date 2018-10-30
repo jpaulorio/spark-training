@@ -9,10 +9,11 @@ node () {
 
     def alljob = env.JOB_NAME.tokenize('/') as String[]
     def proj_name = alljob[0]
+    def branch_name = alljob[1]
 
-    echo "Running ${proj_name}..."
+    echo "Running ${proj_name}/${branch_name}..."
 
-    def job = Jenkins.getInstance().getItemByFullName(proj_name, Job.class)
+    def job = Jenkins.getInstance().getItemByFullName("${proj_name}/${branch_name}", Job.class)
     def build = job.getBuildByNumber(env.BUILD_ID as int)
     def userId = build.getCause(Cause.UserIdCause).getUserId()
 
