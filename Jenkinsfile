@@ -30,6 +30,7 @@ timestamps {
         sh """
           clusterId=\$(aws emr list-clusters --cluster-states RUNNING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2)
           echo \$clusterId
+          aws emr add-steps --cluster-id \$clusterId --steps Type=CUSTOM_JAR,Name=CustomJAR,ActionOnFailure=CONTINUE,Jar=s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,Args=arg1,arg2,arg3
         """
       }
     }
