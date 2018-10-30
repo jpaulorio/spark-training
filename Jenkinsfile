@@ -17,5 +17,13 @@ timestamps {
     stage('Spark Exercises - Publish') {
       s3Upload(consoleLogLevel: 'INFO', dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: "com.thoughtworks.training.de.recife/${userId}", excludedFile: '', flatten: true, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'us-east-1', showDirectlyInBrowser: false, sourceFile: '**/target/scala-2.11/*.jar', storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'AWS DE Trainining Recife', userMetadata: [])
     }
+
+    stage('Spark Exercises - Deploy') {
+      def doDeploy = input(message: 'Arrocha?', ok: 'Podicrê',
+                           parameters: [booleanParam(defaultValue: true,
+                           description: 'Vai com fé!',name: 'Arrocha?')])
+
+      echo "Continua?:" + doDeploy
+    }
   }
 }
