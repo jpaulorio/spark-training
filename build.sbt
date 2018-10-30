@@ -47,7 +47,7 @@ libraryDependencies ++= Seq(
 
 
 
-mainClass in(Compile, packageBin) := Some("com.thoughtworks.example.MainClass")
+//mainClass in(Compile, packageBin) := Some("com.thoughtworks.example.MainClass")
 
 // Compiler settings. Use scalac -X for other options and their description.
 // See Here for more info http://www.scala-lang.org/files/archive/nightly/docs/manual/html/scalac.html
