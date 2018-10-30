@@ -19,11 +19,13 @@ timestamps {
     }
 
     stage('Spark Exercises - Deploy') {
-      def doDeploy = input(message: 'Arrocha?', ok: 'Podicrê',
-                           parameters: [booleanParam(defaultValue: true,
-                           description: 'Vai com fé!',name: 'Arrocha?')])
-
-      echo "Continua?:" + doDeploy
+      def doDeploy = false
+      timeout(time: 15, unit: 'SECONDS') {
+        doDeploy = input(message: 'Arrocha?', ok: 'Podicrê',
+                         parameters: [booleanParam(defaultValue: true,
+                         description: 'Vai com fé!',name: 'Arrocha?')])
+      }
+      echo "Continua?: " + doDeploy
     }
   }
 }
