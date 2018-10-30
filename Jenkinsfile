@@ -10,7 +10,7 @@ timestamps {
       echo "User id: ${userId}"
 
       sh """
-        sbt assembly
+        sbt clean assembly
       """
     }
 
