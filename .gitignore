@@ -4,3 +4,7 @@ derby.log
 target
 .idea
 project/target
+*.tfstate
+*.backup
+.terraform.*
+terraform/.terraform

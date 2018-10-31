@@ -21,7 +21,7 @@ timestamps {
 
         stage('Spark Exercises - Deploy') {
             sh """
-          clusterId=\$(aws emr list-clusters --cluster-states WAITING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2 | sed 's/"//')
+          clusterId=\$(aws emr list-clusters --cluster-states WAITING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-20 | head -n 2 | tail -n +2 | sed 's/"//')
           echo \$clusterId
           aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,${mainClass},s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,Arg1]
         """
