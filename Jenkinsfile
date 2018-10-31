@@ -1,6 +1,7 @@
 timestamps {
     node() {
         def userId = "facilitador"
+        def mainClass = "com.thoughtworks.core.StagesExample"
 
         stage('Spark Exercises - Checkout') {
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/jpaulorio/spark-training.git']]])
@@ -22,7 +23,7 @@ timestamps {
             sh """
           clusterId=\$(aws emr list-clusters --cluster-states WAITING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2 | sed 's/"//')
           echo \$clusterId
-          aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,com.thoughtworks.core.JobsExample,s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,Arg1]
+          aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,${mainClass},s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,Arg1]
         """
         }
     }

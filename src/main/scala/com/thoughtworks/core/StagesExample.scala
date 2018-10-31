@@ -8,7 +8,7 @@ object StagesExample extends Serializable {
 
     val spark = SparkSession
       .builder()
-      .master("local")
+//      .master("local")
       .appName("Data Engineering Capability Development")
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
@@ -22,6 +22,6 @@ object StagesExample extends Serializable {
 
     mappedUsersDF.collect().foreach(println)
 
-    while (true) {}
+//    while (true) {}
   }
 }
