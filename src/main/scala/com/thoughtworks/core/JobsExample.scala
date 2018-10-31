@@ -2,9 +2,12 @@ package com.thoughtworks.core
 
 import org.apache.spark.sql.SparkSession
 import com.thoughtworks.schemas.User
+import org.apache.log4j.LogManager
 
 object JobsExample extends Serializable {
   def main(args: Array[String]): Unit = {
+
+    val log = LogManager.getRootLogger
 
     val spark = SparkSession
       .builder()
@@ -18,11 +21,11 @@ object JobsExample extends Serializable {
     val users = List(User("John", "ThoughtWorks"), User("Jane", "Google"), User("Bob", "Oracle"))
     val usersDF = spark.sparkContext.parallelize(users).toDF
 
-    println(s"Users before filter ${usersDF.count()}")
+    log.info(s"Users before filter ${usersDF.count()}")
 
-    val filteresUsersDF = usersDF.where("Company = 'Google'")
+    val filteredUsersDF = usersDF.where("Company = 'Google'")
 
-    println(s"Users after filter ${filteresUsersDF.count()}")
+    log.info(s"Users after filter ${filteredUsersDF.count()}")
 
     //while (true) {}
   }
