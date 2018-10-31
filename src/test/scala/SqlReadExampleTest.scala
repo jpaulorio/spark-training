@@ -1,6 +1,6 @@
 package com.databricks.example
 
-import utils.DFUtils
+import com.thoughtworks.utils.DFUtils
 
 /**
   * Created by bill on 5/8/17.

@@ -22,7 +22,7 @@ timestamps {
             sh """
           clusterId=\$(aws emr list-clusters --cluster-states WAITING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-19 | head -n 2 | tail -n +2 | sed 's/"//')
           echo \$clusterId
-          aws emr add-steps --cluster-id \$clusterId --steps Type=CUSTOM_JAR,Name=CustomJAR,ActionOnFailure=CONTINUE,Jar=s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,MainClass=core.JobsExample,Args=arg1,arg2,arg3
+          aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,com.thoughtworks.core.JobsExample,s3://com.thoughtworks.training.de.recife/${userId}/de-training-0.1-SNAPSHOT.jar,Arg1]
         """
         }
     }

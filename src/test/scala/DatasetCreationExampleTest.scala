@@ -1,7 +1,7 @@
 package com.databricks.example
 
-import schemas.User
-import utils.DSUtils
+import com.thoughtworks.schemas.User
+import com.thoughtworks.utils.DSUtils
 
 /**
   * Created by bill on 3/30/17.
