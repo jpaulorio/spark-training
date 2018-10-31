@@ -7,7 +7,7 @@ import org.apache.log4j.LogManager
 object JobsExample extends Serializable {
   def main(args: Array[String]): Unit = {
 
-    val log = LogManager.getRootLogger
+    val log = LogManager.getLogger(this.getClass)
 
     val spark = SparkSession
       .builder()
