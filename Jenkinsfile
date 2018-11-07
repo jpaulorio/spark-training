@@ -1,7 +1,7 @@
 timestamps {
     node() {
         def userId = "facilitador"
-        def mainClass = "com.thoughtworks.core.StagesExample"
+        def mainClass = "com.thoughtworks.exercises.BatchExercises"
         def artifactBucket = "com.thoughtworks.training.de.recife/${userId}/bin"
 
         stage('Spark Exercises - Checkout') {
@@ -24,7 +24,7 @@ timestamps {
             sh """
           clusterId=\$(aws emr list-clusters --cluster-states WAITING --query 'Clusters[?Name==`${userId}`].Id' | cut -c6-20 | head -n 2 | tail -n +2 | sed 's/"//')
           echo \$clusterId
-          aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,${mainClass},s3://${artifactBucket}/${userId}/bin/de-training-0.1-SNAPSHOT.jar,Arg1]
+          aws emr add-steps --cluster-id \$clusterId --steps Type=Spark,Name="Spark Exercises",ActionOnFailure=CONTINUE,Args=[--class,${mainClass},s3://${artifactBucket}/de-training-0.1-SNAPSHOT.jar,Arg1]
         """
         }
     }
