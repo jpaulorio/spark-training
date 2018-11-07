@@ -8,3 +8,5 @@ project/target
 *.backup
 .terraform.*
 terraform/.terraform
+docker/
+*.csv

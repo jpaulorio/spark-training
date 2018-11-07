@@ -6,7 +6,7 @@ version := "0.1-SNAPSHOT"
 scalaVersion := "2.11.8"
 
 // Spark Information
-val sparkVersion = "2.3.1"
+val sparkVersion = "2.3.2"
 
 assemblyJarName in assembly := s"de-training-${version.value}.jar"
 
