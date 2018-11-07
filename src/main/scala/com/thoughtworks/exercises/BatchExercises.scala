@@ -9,10 +9,12 @@ object BatchExercises {
     val properties = new Properties()
     properties.load(this.getClass.getResourceAsStream(s"/application.properties"))
     val baseBucket = properties.getProperty("base_bucket")
+    val username = properties.get("username")
     val dataFilesBucket = properties.getProperty("data_files_bucket")
-    val ordersBucket = s"$baseBucket/$dataFilesBucket/orders.csv"
-    val orderItemsBucket = s"$baseBucket/$dataFilesBucket/orderItems.csv"
-    val productsBucket = s"$baseBucket/$dataFilesBucket/products.csv"
+
+    val ordersBucket = s"$baseBucket/$username/$dataFilesBucket/orders"
+    val orderItemsBucket = s"$baseBucket/$username/$dataFilesBucket/orderItems"
+    val productsBucket = s"$baseBucket/$username/$dataFilesBucket/products"
 
     val spark = SparkSession
       .builder()
