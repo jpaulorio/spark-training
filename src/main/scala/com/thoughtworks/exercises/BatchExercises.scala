@@ -54,6 +54,13 @@ object BatchExercises {
     val total = dfOrdersWithItems.agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity" ).as("total"))
       .select("total").first().getAs[Double]("total")
 
-    log.info(s"O total de vendas foi ${total}")
+    val locale = new java.util.Locale("pt", "BR")
+    val formatter = java.text.NumberFormat.getIntegerInstance(locale)
+    val totalFormatted = formatter.format(total)
+
+    log.info(s"O total de vendas foi $totalFormatted")
+    println(s"O total de vendas foi $totalFormatted")
+    //1.8567005074543173E11
+    //cento e oitenta e cinco bilhões, seiscentos e setenta milhões, cinquenta mil e setecentos e quarenta e cinco
   }
 }
