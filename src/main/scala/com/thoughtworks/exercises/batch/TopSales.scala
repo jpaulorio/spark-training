@@ -53,19 +53,20 @@ object TopSales {
 
     val totals = dfOrdersWithItems
       .groupBy($"ooi.ProductId", $"p.Name")
-      .agg(sum($"ooi.Quantity" ).as("totalQty"))
-      .select($"Name", $"totalQty")
+      .agg(sum($"ooi.Quantity" ).as("totalQty"), sum($"ooi.Price" - $"ooi.Discount").as("totalRevenue"))
+      .select($"Name", $"totalQty", $"totalRevenue")
       .orderBy($"totalQty".desc)
-      //.limit(10)
+      .limit(10)
       .collect()
-      .map(x => (x.getAs[String](0), x.getAs[Integer](1)))
+      .map(x => (x.getAs[String](0), x.getAs[Integer](1), x.getAs[Double](2)))
 
     val locale = new java.util.Locale("pt", "BR")
-    val formatter = java.text.NumberFormat.getIntegerInstance(locale)
-    val totalsFormatted = totals.map(x => (x._1, formatter.format(x._2)))
+    val integerFormatter = java.text.NumberFormat.getIntegerInstance(locale)
+    val currencyFormatter = java.text.NumberFormat.getCurrencyInstance(locale)
+    val totalsFormatted = totals.map(x => (x._1, integerFormatter.format(x._2), currencyFormatter.format(x._3)))
 
-    totalsFormatted.foreach(x => log.info(s"A quantidade vendida do produto ${x._1} foi ${x._2}"))
-    totalsFormatted.foreach(x => println(s"A quantidade vendida do produto ${x._1} foi ${x._2}"))
+    totalsFormatted.foreach(x => log.info(s"A quantidade vendida do produto ${x._1} foi ${x._2} e o total foi ${x._3}"))
+    totalsFormatted.foreach(x => println(s"A quantidade vendida do produto ${x._1} foi ${x._2} e o total foi ${x._3}"))
 
   }
 }
