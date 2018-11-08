@@ -62,8 +62,8 @@ object NeatTotalByStore {
     val formatter = java.text.NumberFormat.getCurrencyInstance(locale)
     val totalsFormatted = totals.map(x => (x._1, formatter.format(x._2)))
 
-    log.info(s"O total de vendas foi $totalsFormatted")
-    println(s"O total de vendas foi $totalsFormatted")
+    log.info(s"O total de vendas foi ${totalsFormatted.toString}")
+    println(s"O total de vendas foi ${totalsFormatted.toString}")
     //1.8567005074543173E11
     //cento e oitenta e cinco bilhões, seiscentos e setenta milhões, cinquenta mil e setecentos e quarenta e cinco
   }
