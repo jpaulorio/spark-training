@@ -5,7 +5,7 @@ import java.util.Properties
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
-object NeatTotal {
+object NeatTotalByStore {
   def main(args: Array[String]): Unit = {
     val log = LogManager.getLogger(this.getClass)
 
