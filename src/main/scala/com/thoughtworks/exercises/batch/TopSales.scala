@@ -53,7 +53,8 @@ object TopSales {
 
     val totals = dfOrdersWithItems
       .groupBy($"ooi.ProductId", $"p.Name")
-      .agg(sum($"ooi.Quantity" ).as("totalQty"), sum($"ooi.Price" - $"ooi.Discount").as("totalRevenue"))
+      .agg(sum($"ooi.Quantity" ).as("totalQty"),
+        sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity").as("totalRevenue"))
       .select($"Name", $"totalQty", $"totalRevenue")
       .orderBy($"totalQty".desc)
       .limit(10)
