@@ -1,11 +1,11 @@
-package com.thoughtworks.exercises
+package com.thoughtworks.exercises.batch
 
 import java.util.Properties
 
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
-object BatchExercises {
+object NeatTotal {
   def main(args: Array[String]): Unit = {
     val log = LogManager.getLogger(this.getClass)
 
@@ -43,23 +43,27 @@ object BatchExercises {
       .option("infer_schema", true)
       .csv(productsBucket)
 
-    import spark.implicits._
     import org.apache.spark.sql.functions._
+    import spark.implicits._
 
     val dfOrdersWithItems = dfOrdersRaw
       .join(dfOrderItemsRaw, "OrderId")
       .as("ooi")
       .join(dfProductsRaw.as("p"), col("ooi.ProductId") === col("p.ProductId"))
 
-    val total = dfOrdersWithItems.agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity" ).as("total"))
-      .select("total").first().getAs[Double]("total")
+    val totals = dfOrdersWithItems
+      .groupBy($"ooi.StoreId")
+      .agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity" ).as("total"))
+      .select($"StoreID", $"total")
+      .collect()
+      .map(x => (x.getAs[String](0), x.getAs[Double](1)))
 
     val locale = new java.util.Locale("pt", "BR")
-    val formatter = java.text.NumberFormat.getIntegerInstance(locale)
-    val totalFormatted = formatter.format(total)
+    val formatter = java.text.NumberFormat.getCurrencyInstance(locale)
+    val totalsFormatted = totals.map(x => (x._1, formatter.format(x._2)))
 
-    log.info(s"O total de vendas foi $totalFormatted")
-    println(s"O total de vendas foi $totalFormatted")
+    log.info(s"O total de vendas foi $totalsFormatted")
+    println(s"O total de vendas foi $totalsFormatted")
     //1.8567005074543173E11
     //cento e oitenta e cinco bilhões, seiscentos e setenta milhões, cinquenta mil e setecentos e quarenta e cinco
   }
