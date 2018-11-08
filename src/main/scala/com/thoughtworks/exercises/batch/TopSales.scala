@@ -56,7 +56,7 @@ object TopSales {
       .agg(sum($"ooi.Quantity" ).as("totalQty"))
       .select($"Name", $"totalQty")
       .orderBy($"totalQty".desc)
-      .limit(10)
+      //.limit(10)
       .collect()
       .map(x => (x.getAs[String](0), x.getAs[Integer](1)))
 
