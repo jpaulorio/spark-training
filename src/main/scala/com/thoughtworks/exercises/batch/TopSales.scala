@@ -5,7 +5,7 @@ import java.util.Properties
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
-object NeatTotalByStore {
+object TopSales {
   def main(args: Array[String]): Unit = {
     val log = LogManager.getLogger(this.getClass)
 
@@ -52,22 +52,20 @@ object NeatTotalByStore {
       .join(dfProductsRaw.as("p"), col("ooi.ProductId") === col("p.ProductId"))
 
     val totals = dfOrdersWithItems
-      .groupBy($"ooi.StoreId")
-      .agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity" ).as("total"))
-      .select($"StoreID", $"total")
+      .groupBy($"ooi.ProductId", $"p.Name")
+      .agg(sum($"ooi.Quantity" ).as("totalQty"))
+      .select($"Name", $"totalQty")
+      .orderBy($"totalQty".desc)
+      .limit(10)
       .collect()
-      .map(x => (x.getAs[String](0), x.getAs[Double](1)))
+      .map(x => (x.getAs[String](0), x.getAs[Integer](1)))
 
     val locale = new java.util.Locale("pt", "BR")
-    val formatter = java.text.NumberFormat.getCurrencyInstance(locale)
+    val formatter = java.text.NumberFormat.getIntegerInstance(locale)
     val totalsFormatted = totals.map(x => (x._1, formatter.format(x._2)))
 
-    totalsFormatted.foreach(x => log.info(s"O total de vendas da loja ${x._1} foi de ${x._2}"))
-    totalsFormatted.foreach(x => println(s"O total de vendas da loja ${x._1} foi de ${x._2}"))
-    //O total de vendas da loja c35c8e0c-8e0b-47cc-8d5a-9fb0cb8799bb foi R$ 46.451.700.278,54
-    //O total de vendas da loja 6e80e53d-6c9a-455f-b324-0ca9fda7e6f7 foi R$ 46.429.891.592,29
-    //O total de vendas da loja b25df442-c2f4-4f4b-8973-f16d214a55a6 foi R$ 46.398.468.098,30
-    //O total de vendas da loja 05936c42-a9ad-4541-bae5-5aa406c0e180 foi R$ 46.389.990.776,29
+    totalsFormatted.foreach(x => log.info(s"A quantidade vendida do produto ${x._1} foi ${x._2}"))
+    totalsFormatted.foreach(x => println(s"A quantidade vendida do produto ${x._1} foi ${x._2}"))
 
   }
 }
