@@ -2,10 +2,13 @@ package com.thoughtworks.exercises
 
 import java.util.Properties
 
+import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
 object BatchExercises {
   def main(args: Array[String]): Unit = {
+    val log = LogManager.getLogger(this.getClass)
+
     val properties = new Properties()
     properties.load(this.getClass.getResourceAsStream(s"/application.properties"))
     val baseBucket = properties.getProperty("base_bucket")
@@ -51,6 +54,6 @@ object BatchExercises {
     val total = dfOrdersWithItems.agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity" ).as("total"))
       .select("total").first().getAs[Double]("total")
 
-    println(s"O total de vendas foi ${total}")
+    log.info(s"O total de vendas foi ${total}")
   }
 }
