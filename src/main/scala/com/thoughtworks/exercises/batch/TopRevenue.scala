@@ -5,7 +5,7 @@ import java.util.Properties
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
-object TopSales {
+object TopRevenue {
   def main(args: Array[String]): Unit = {
     val log = LogManager.getLogger(this.getClass)
 
@@ -55,8 +55,8 @@ object TopSales {
       .groupBy($"ooi.ProductId", $"p.Name")
       .agg(sum($"ooi.Quantity" ).as("totalQty"),
         sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity").as("totalRevenue"))
-      .select($"Name", $"totalQty", $"totalRevenue")
-      .orderBy($"totalQty".desc)
+      .select($"Name", $"totalRevenue", $"totalQty")
+      .orderBy($"totalRevenue".desc)
       .limit(10)
       .collect()
       .map(x => (x.getAs[String](0), x.getAs[Integer](1), x.getAs[Double](2)))
@@ -64,19 +64,10 @@ object TopSales {
     val locale = new java.util.Locale("pt", "BR")
     val integerFormatter = java.text.NumberFormat.getIntegerInstance(locale)
     val currencyFormatter = java.text.NumberFormat.getCurrencyInstance(locale)
-    val totalsFormatted = totals.map(x => (x._1, integerFormatter.format(x._2), currencyFormatter.format(x._3)))
+    val totalsFormatted = totals.map(x => (x._1, currencyFormatter.format(x._2), integerFormatter.format(x._3)))
 
-    totalsFormatted.foreach(x => log.info(s"A quantidade vendida do produto ${x._1} foi ${x._2} e o total foi ${x._3}"))
-    totalsFormatted.foreach(x => println(s"A quantidade vendida do produto ${x._1} foi ${x._2} e o total foi ${x._3}"))
-//    A quantidade vendida do produto TelevisÃ£o foi 24.762.835 e o total foi R$ 5.227.589.970,04
-//    A quantidade vendida do produto Vinho foi 24.751.372 e o total foi R$ 1.512.336.045,43
-//    A quantidade vendida do produto Camisa foi 24.751.211 e o total foi R$ 1.265.075.068,45
-//    A quantidade vendida do produto Bicicleta foi 24.751.164 e o total foi R$ 5.225.359.144,04
-//    A quantidade vendida do produto Celular foi 24.750.597 e o total foi R$ 27.501.026.170,46
-//    A quantidade vendida do produto Bola de Futebol foi 24.735.046 e o total foi R$ 769.351.599,62
-//    A quantidade vendida do produto FogÃ£o foi 24.729.233 e o total foi R$ 7.941.224.984,90
-//    A quantidade vendida do produto Geladeira foi 24.728.783 e o total foi R$ 54.875.805.242,88
-//    A quantidade vendida do produto CalÃ§a foi 24.725.656 e o total foi R$ 1.980.631.822,30
-//    A quantidade vendida do produto Videogame foi 24.716.903 e o total foi R$ 79.371.650.697,30
+    totalsFormatted.foreach(x => log.info(s"O total vendido do produto ${x._1} foi ${x._2} e a quantidade foi ${x._3}"))
+    totalsFormatted.foreach(x => println(s"O total vendido do produto ${x._1} foi ${x._2} e a quantidade foi ${x._3}"))
+
   }
 }
