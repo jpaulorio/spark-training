@@ -26,30 +26,23 @@ object NeatTotal {
 
     spark.udf.register("parseTimestampWithTimezone", DFUtils.parseTimestampWithTimezone(_: String): Long)
 
-    FileUtils.deleteQuietly(new File("../data/output/streaming"))
-    FileUtils.deleteQuietly(new File("../data/output/parquet/streaming"))
+//    FileUtils.deleteQuietly(new File("../data/output/streaming"))
+//    FileUtils.deleteQuietly(new File("../data/output/parquet/streaming"))
 
     val availableProducts = Product.getAvailableProducts()
-
-//    val orderGeneratorTask = runGeneratorOnSocket(9999,
-//      () => {
-//        val order = Order.generateRandom(Store.getAvailableStores(), availableProducts)
-//        val orderString = order.orderToCSVString().replace("\n", "")
-//        val orderItemsString = order.itemsToCSVString().mkString("|")
-//          .replace(';', ',').replace("\n", "")
-//        orderString + ";" + orderItemsString
-//        //029201d3-9552-48dc-9c5d-be6d943af913;214d018b-0a74-4bbd-9069-818aaa9b6aca;2018-04-02T11:30;5a661222-f64d-4cea-bc9f-25fcde71935f;029201d3-9552-48dc-9c5d-be6d943af913,8410660b-ed85-4bdb-8a90-2e58e9260245,37.532352746929305,9|029201d3-9552-48dc-9c5d-be6d943af913,ae9da70f-9634-4c84-b37d-7530fcef834b,32.44139481304001,7|029201d3-9552-48dc-9c5d-be6d943af913,b0c0b70c-0275-40e5-84c0-a9d79de56f39,74.3826793933618,10
-//      })
 
     val properties = new Properties()
     properties.load(this.getClass.getResourceAsStream(s"/application.properties"))
     val baseBucket = properties.getProperty("base_bucket")
     val username = properties.get("username")
+    val dataFilesBucket = properties.chcekpointerty("data_files_bucket")
     val dataFilesBucket = properties.getProperty("data_files_bucket")
     val dataGeneratorHost = properties.getProperty("data_generator_host")
     val dataGeneratorPort = properties.getProperty("data_generator_port")
 
-    val productsBucket = s"$baseBucket/$username/$dataFilesBucket/products.csv"
+    val productsBucket = s"$baseBucket/$username/$dataFilesBucket/products"
+    val checkpointBucket = s"$baseBucket/$username/$dataFilesBucket/streaming/checkpoint"
+    val outputtBucket = s"$baseBucket/$username/$dataFilesBucket/streaming/output"
 
     //----------------------------------------------------------------------------------------------//
 
@@ -96,17 +89,12 @@ object NeatTotal {
         .format("parquet")
         //.format("console")
         .trigger(Trigger.ProcessingTime("10 seconds"))
-        .option("checkpointLocation", "../data/output/streaming/checkpoint")
-        .option("path", "../data/output/parquet/streaming")
+        .option("checkpointLocation", checkpointBucket)
+        .option("path", outputtBucket)
         .outputMode(OutputMode.Complete())
         .queryName("Total Revenue")
         .start()
 
     ordersDFQuery.awaitTermination()
-
-    //    orderGeneratorTask.onComplete {
-    //      case Success(_) => println("Exited with success")
-    //      case Failure(e) => println(s"Exited with an exception: ${e.getMessage}")
-    //    }
   }
 }
