@@ -23,11 +23,14 @@ object Persistence {
     val orderItemsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/out/parquet/orderItems"
     val productsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/out/parquet/products"
 
+
     val spark = SparkSession
-      .builder()
-      //.master("local")
-      .appName("Data Engineering Capability Development - ETL Exercises")
-      .getOrCreate()
+    .builder()
+    //.master("local")
+    .appName("Data Engineering Capability Development - ETL Exercises")
+    .getOrCreate()
+
+    import spark.implicits._
 
     spark.read
       .option("delimiter", ";")
@@ -44,6 +47,7 @@ object Persistence {
       .option("header", true)
       .option("infer_schema", true)
       .csv(orderItemsBucket)
+      .repartition(200, $"OrderId")
       .write
       .mode(SaveMode.Overwrite)
       .partitionBy("OrderId")
