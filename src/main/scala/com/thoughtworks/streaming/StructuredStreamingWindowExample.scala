@@ -38,7 +38,6 @@ object StructuredStreamingWindowExample {
     .option("port", 9999)
     .load()
 
-
     val wordCountsDF = socketStreamDF
       .withColumn("timestamp", expr("CAST(parseTimestampWithTimezone(value) / 1000 AS TIMESTAMP)"))
       .withWatermark("timestamp", "10 seconds")
@@ -48,12 +47,10 @@ object StructuredStreamingWindowExample {
     val wordCountQuery =
       wordCountsDF
       .writeStream
-      //.format("parquet")
-      .format("console")
-      .option("checkpointLocation", "../data/output/com.thoughtworks.streaming-window/checkpoint")
-      .option("path", "../data/output/parquet/com.thoughtworks.streaming-window")
-      .outputMode(OutputMode.Append())
-      //.outputMode(OutputMode.Complete())
+      .format("parquet")
+      .option("checkpointLocation", "../data/output/streaming-window/checkpoint")
+      .option("path", "../data/output/parquet/streaming-window")
+      .outputMode(OutputMode.Complete())
       .queryName("WordCount")
       .start()
 

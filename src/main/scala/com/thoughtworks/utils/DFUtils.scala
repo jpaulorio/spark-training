@@ -21,4 +21,8 @@ object DFUtils extends Serializable {
     str.toList.reverse.mkString
   }
 
+  def splitStringOn(str: String, delimiter: Char): Array[String] = {
+    str.split(delimiter)
+  }
+
 }

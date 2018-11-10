@@ -28,8 +28,8 @@ object StructuredStreamingExample {
 
     spark.udf.register("reverse", DFUtils.reverse(_: String): String)
 
-    FileUtils.deleteQuietly(new File("../data/output/com.thoughtworks.streaming"))
-    FileUtils.deleteQuietly(new File("../data/output/parquet/com.thoughtworks.streaming"))
+    FileUtils.deleteQuietly(new File("../data/output/streaming"))
+    FileUtils.deleteQuietly(new File("../data/output/parquet/streaming"))
 
     val task = runGeneratorOnSocket(9999, () => DateTime.now)
 
@@ -53,8 +53,8 @@ object StructuredStreamingExample {
         .format("parquet")
         .trigger(Trigger.ProcessingTime("20 seconds"))
         //.format("console")
-        .option("checkpointLocation", "../data/output/com.thoughtworks.streaming/checkpoint")
-        .option("path", "../data/output/parquet/com.thoughtworks.streaming")
+        .option("checkpointLocation", "../data/output/streaming/checkpoint")
+        .option("path", "../data/output/parquet/streaming")
         .outputMode(OutputMode.Append())
         .queryName("WordReverse")
         .start()

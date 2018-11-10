@@ -9,24 +9,9 @@ object DataGenerator {
   private val ORDER_COUNT = 2
 
   def main(args: Array[String]): Unit = {
-    val availableStores = List(
-      Store(UUID.randomUUID().toString, "Loja Sul"),
-      Store(UUID.randomUUID().toString, "Loja Norte"),
-      Store(UUID.randomUUID().toString, "Loja Leste"),
-      Store(UUID.randomUUID().toString, "Loja Oeste")
-    )
-    val availableProducts = List(
-      Product(UUID.randomUUID().toString, "Bicicleta", "Esporte & Lazer", 234.56),
-      Product(UUID.randomUUID().toString, "Bola de Futebol", "Esporte & Lazer", 34.56),
-      Product(UUID.randomUUID().toString, "Televisão", "Eletrônicos", 234.56),
-      Product(UUID.randomUUID().toString, "Celular", "Eletrônicos", 1234.56),
-      Product(UUID.randomUUID().toString, "Geladeira", "Eletrodomésticos", 2465.67),
-      Product(UUID.randomUUID().toString, "Fogão", "Eletrodomésticos", 356.78),
-      Product(UUID.randomUUID().toString, "Videogame", "Eletrônicos", 3567.89),
-      Product(UUID.randomUUID().toString, "Camisa", "Vestuário", 56.79),
-      Product(UUID.randomUUID().toString, "Calça", "Vestuário", 89.01),
-      Product(UUID.randomUUID().toString, "Vinho", "Bebidas", 67.89)
-    )
+    val availableStores = Store.getAvailableStores()
+
+    val availableProducts = Product.getAvailableProducts()
 
     val productLines = availableProducts.map(product => product.productToCSVString())
     val bwProducts = FileUtils.initializeFile("products.csv", "ProductId;Name;Category;Price")

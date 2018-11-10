@@ -10,9 +10,11 @@ object DataFrameJoinExample extends Serializable {
       .master("local")
       .appName("Data Engineering Capability Development - Dataframe Join Example")
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
+      .config("spark.sql.autoBroadcastJoinThreshold", -1)
       .getOrCreate()
 
     import spark.implicits._
+    import org.apache.spark.sql.functions._
 
     val usersParquetDF = spark.read.parquet("../data/parquet/users/")
 
@@ -24,6 +26,10 @@ object DataFrameJoinExample extends Serializable {
 
     enhancedUsersDF.show(false)
 
+    val enhancedUsersBroadcastDF = usersParquetDF.join(broadcast(ageSalaryDF), "Name")
+
+    enhancedUsersBroadcastDF.show(false)
+
     //----------------------------------------------------------------------------------------------//
 
     val enhancedUsersDF2 = usersParquetDF.join(ageSalaryDF, Seq("Name"), "left")
@@ -33,14 +39,14 @@ object DataFrameJoinExample extends Serializable {
     //----------------------------------------------------------------------------------------------//
 
     val enhancedUsersDF3 = usersParquetDF.join(ageSalaryDF,
-        usersParquetDF.col("Name") === ageSalaryDF.col("Name"))
+      usersParquetDF.col("Name") === ageSalaryDF.col("Name"))
 
     enhancedUsersDF3.show(false)
 
     //----------------------------------------------------------------------------------------------//
 
     val enhancedUsersDF4 = usersParquetDF.as("l").join(ageSalaryDF.as("r"),
-    $"l.Name" === $"r.Name")
+      $"l.Name" === $"r.Name")
 
     enhancedUsersDF4.show(false)
 

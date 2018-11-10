@@ -25,7 +25,7 @@ object Persistence {
 
     val spark = SparkSession
       .builder()
-//      .master("local")
+      .master("local")
       .appName("Data Engineering Capability Development - ETL Exercises")
       .getOrCreate()
 
