@@ -35,7 +35,6 @@ object NeatTotal {
     properties.load(this.getClass.getResourceAsStream(s"/application.properties"))
     val baseBucket = properties.getProperty("base_bucket")
     val username = properties.get("username")
-    val dataFilesBucket = properties.chcekpointerty("data_files_bucket")
     val dataFilesBucket = properties.getProperty("data_files_bucket")
     val dataGeneratorHost = properties.getProperty("data_generator_host")
     val dataGeneratorPort = properties.getProperty("data_generator_port")
