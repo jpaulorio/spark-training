@@ -80,7 +80,7 @@ object NeatTotal {
       .withWatermark("Timestamp", "10 seconds")
       .groupBy(window($"Timestamp", "2 minutes", "5 seconds").as("TimeStamp"))
       .agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity").as("Total"))
-    .orderBy($"Timestamp")
+//    .orderBy($"Timestamp")
 
     val ordersDFQuery =
       totalRevenueDF
