@@ -86,14 +86,14 @@ object NeatTotal {
       .withWatermark("Timestamp", "10 seconds")
       .groupBy(window($"Timestamp", "2 minutes", "5 seconds").as("TimeStamp"))
       .agg(sum(($"p.Price" - $"ooi.Discount") * $"ooi.Quantity").as("Total"))
-    //.orderBy($"Timestamp")
+    .orderBy($"Timestamp")
 
     val ordersDFQuery =
       totalRevenueDF
         .writeStream
-        //        .format("parquet")
+        .format("parquet")
+        //.format("console")
         .trigger(Trigger.ProcessingTime("10 seconds"))
-        .format("console")
         .option("checkpointLocation", "../data/output/streaming/checkpoint")
         .option("path", "../data/output/parquet/streaming")
         .outputMode(OutputMode.Append())

@@ -35,7 +35,7 @@ object Persistence {
       .option("infer_schema", true)
       .csv(ordersBucket)
       .write
-      .partitionBy("StoreId", "Timestamp")
+      .partitionBy("StoreId")
       .parquet(ordersParquetBucket)
 
     spark.read
