@@ -90,7 +90,7 @@ object NeatTotal {
         .trigger(Trigger.ProcessingTime("10 seconds"))
         .option("checkpointLocation", checkpointBucket)
         .option("path", outputtBucket)
-        .outputMode(OutputMode.Complete())
+        .outputMode(OutputMode.Append())
         .queryName("Total Revenue")
         .start()
 
