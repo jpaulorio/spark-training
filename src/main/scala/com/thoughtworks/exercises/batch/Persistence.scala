@@ -3,7 +3,7 @@ package com.thoughtworks.exercises.batch
 import java.util.Properties
 
 import org.apache.log4j.LogManager
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SaveMode, SparkSession}
 
 object Persistence {
   def main(args: Array[String]): Unit = {
@@ -19,9 +19,9 @@ object Persistence {
     val orderItemsBucket = s"$baseBucket/$username/$dataFilesBucket/orderItems"
     val productsBucket = s"$baseBucket/$username/$dataFilesBucket/products"
 
-    val ordersParquetBucket = s"$baseBucket/$username/$dataFilesBucket/parquet/orders"
-    val orderItemsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/parquet/orderItems"
-    val productsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/parquet/products"
+    val ordersParquetBucket = s"$baseBucket/$username/$dataFilesBucket/out/parquet/orders"
+    val orderItemsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/out/parquet/orderItems"
+    val productsParquetBucket = s"$baseBucket/$username/$dataFilesBucket/out/parquet/products"
 
     val spark = SparkSession
       .builder()
@@ -35,6 +35,7 @@ object Persistence {
       .option("infer_schema", true)
       .csv(ordersBucket)
       .write
+      .mode(SaveMode.Overwrite)
       .partitionBy("StoreId")
       .parquet(ordersParquetBucket)
 
@@ -44,6 +45,7 @@ object Persistence {
       .option("infer_schema", true)
       .csv(orderItemsBucket)
       .write
+      .mode(SaveMode.Overwrite)
       .partitionBy("OrderId")
       .parquet(orderItemsParquetBucket)
 
@@ -53,6 +55,7 @@ object Persistence {
       .option("infer_schema", true)
       .csv(productsBucket)
       .write
-      .parquet(productsParquetBucket)
+      .mode(SaveMode.Overwrite)
+      .json(productsParquetBucket)
   }
 }
