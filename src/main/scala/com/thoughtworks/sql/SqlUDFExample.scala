@@ -15,7 +15,7 @@ object SqlUDFExample extends Serializable {
 
     spark.udf.register("startsWith", DFUtils.startsWith(_:String,_:String):Boolean)
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     usersParquetDF.createTempView("users")
 

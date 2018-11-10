@@ -13,7 +13,7 @@ object DataFrameAggregationExample extends Serializable {
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
 
-    val enhancedUsersDF = spark.read.parquet("../data/parquet/users-enhanced/")
+    val enhancedUsersDF = spark.read.parquet("data/parquet/users-enhanced/")
 
     //----------------------------------------------------------------------------------------------//
 

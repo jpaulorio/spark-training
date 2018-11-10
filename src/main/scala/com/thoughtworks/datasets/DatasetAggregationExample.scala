@@ -21,7 +21,7 @@ object DatasetAggregationExample extends Serializable {
 
     import spark.implicits._
 
-    val enhancedUsersDS = spark.read.parquet("../data/parquet/users-enhanced/").as[EnhancedUser]
+    val enhancedUsersDS = spark.read.parquet("data/parquet/users-enhanced/").as[EnhancedUser]
 
     //----------------------------------------------------------------------------------------------//
 

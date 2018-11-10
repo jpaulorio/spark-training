@@ -21,7 +21,7 @@ object NorthwindExercises extends Serializable {
       .read
       .option("inferSchema", true)
       .option("header", true)
-      .csv("../data/csv/northwind/employees.csv")
+      .csv("data/csv/northwind/employees.csv")
       //.repartition(4)
 
     employees.printSchema()
@@ -31,7 +31,7 @@ object NorthwindExercises extends Serializable {
       .read
       .option("inferSchema", true)
       .option("header", true)
-      .csv("../data/csv/northwind/products.csv")
+      .csv("data/csv/northwind/products.csv")
       //.repartition(4)
 
     products.printSchema()
@@ -41,7 +41,7 @@ object NorthwindExercises extends Serializable {
       .read
       .option("inferSchema", true)
       .option("header", true)
-      .csv("../data/csv/northwind/orders.csv")
+      .csv("data/csv/northwind/orders.csv")
       //.repartition(4)
 
     orders.printSchema()
@@ -51,7 +51,7 @@ object NorthwindExercises extends Serializable {
       .read
       .option("inferSchema", true)
       .option("header", true)
-      .csv("../data/csv/northwind/order-details.csv")
+      .csv("data/csv/northwind/order-details.csv")
       //.repartition(4)
 
     orderDetails.printSchema()

@@ -16,7 +16,7 @@ object DataFrameCreationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     usersParquetDF.show(false)
 
@@ -32,7 +32,7 @@ object DataFrameCreationExample extends Serializable {
       .option("header", true)
       .option("delimiter", ";")
       .schema(customSchema)
-      .load("../data/csv/users/")
+      .load("data/csv/users/")
 
     usersWithCustomSchemaDF.show(false)
 
@@ -41,7 +41,7 @@ object DataFrameCreationExample extends Serializable {
     import spark.implicits._
 
     val usersDF = spark.sparkContext
-      .textFile("../data/csv/users/")
+      .textFile("data/csv/users/")
       .map(_.split(";"))
       .map(attributes => User(attributes(0), attributes(1).trim))
       .toDF()
@@ -50,7 +50,7 @@ object DataFrameCreationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersRDD = spark.sparkContext.textFile("../data/csv/users/")
+    val usersRDD = spark.sparkContext.textFile("data/csv/users/")
 
     val schemaString = "name company"
 

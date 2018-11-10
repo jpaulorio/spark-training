@@ -21,7 +21,7 @@ object DatasetUDFExample extends Serializable {
 
     import spark.implicits._
 
-    val usersParquetDS = spark.read.parquet("../data/parquet/users/").as[User]
+    val usersParquetDS = spark.read.parquet("data/parquet/users/").as[User]
 
     //----------------------------------------------------------------------------------------------//
 

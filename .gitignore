@@ -9,4 +9,5 @@ project/target
 .terraform.*
 terraform/.terraform
 docker/
-*.csv
+*.csvdata/output/
+Jenkinsfile

@@ -19,21 +19,21 @@ object DataFrameWriteExample extends Serializable {
 
     spark.udf.register("startsWith", DFUtils.startsWith(_:String,_:String):Boolean)
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
-    FileUtils.deleteQuietly(new File("../data/output"))
-
-    //----------------------------------------------------------------------------------------------//
-
-    usersParquetDF.write.parquet("../data/output/parquet/")
+    FileUtils.deleteQuietly(new File("data/output"))
 
     //----------------------------------------------------------------------------------------------//
 
-    usersParquetDF.write.csv("../data/output/csv/")
+    usersParquetDF.write.parquet("data/output/parquet/")
 
     //----------------------------------------------------------------------------------------------//
 
-    usersParquetDF.write.json("../data/output/json/")
+    usersParquetDF.write.csv("data/output/csv/")
+
+    //----------------------------------------------------------------------------------------------//
+
+    usersParquetDF.write.json("data/output/json/")
 
     while (true) {}
   }

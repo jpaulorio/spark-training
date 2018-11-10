@@ -40,9 +40,9 @@ object CatalogAPIExample extends Serializable {
       spark.sql("drop table Users")
     }
     spark.catalog.listTables().collectAsList().asScala.foreach(println)
-    spark.catalog.createTable("Users", "../data/parquet/users/")
+    spark.catalog.createTable("Users", "data/parquet/users/")
     spark.catalog.listTables().collectAsList().asScala.foreach(println)
-    //val usersDF = spark.read.option("header", true).option("delimiter", ";").csv("../data/csv/users/")
+    //val usersDF = spark.read.option("header", true).option("delimiter", ";").csv("data/csv/users/")
     //usersDF.write.saveAsTable("Users")
   }
 }

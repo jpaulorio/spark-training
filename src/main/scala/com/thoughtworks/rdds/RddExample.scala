@@ -24,7 +24,7 @@ object RddExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersFromCsvRDD = spark.sparkContext.textFile("../data/csv/users/")
+    val usersFromCsvRDD = spark.sparkContext.textFile("data/csv/users/")
 
     val lines = usersFromCsvRDD.map(_.split(";")).collect().toList
 

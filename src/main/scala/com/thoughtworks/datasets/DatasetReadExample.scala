@@ -23,20 +23,20 @@ object DatasetReadExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersParquetDS = spark.read.parquet("../data/parquet/users/").as[User]
+    val usersParquetDS = spark.read.parquet("data/parquet/users/").as[User]
 
     usersParquetDS.show()
 
     //----------------------------------------------------------------------------------------------//
 
     val usersCSVDS = spark.read.option("header", true).option("infer_schema", true).option("delimiter", ";")
-      .csv("../data/csv/users/").as[User]
+      .csv("data/csv/users/").as[User]
 
     usersCSVDS.show()
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersJsonDS = spark.read.json("../data/json/users/").as[User]
+    val usersJsonDS = spark.read.json("data/json/users/").as[User]
 
     usersJsonDS.show()
 
@@ -46,7 +46,7 @@ object DatasetReadExample extends Serializable {
       .option("header", true)
       .option("infer_schema", true)
       .option("delimiter", ";")
-      .load("../data/csv/users/").as[User]
+      .load("data/csv/users/").as[User]
 
     usersGenericDS.show()
 

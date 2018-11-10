@@ -1,0 +1,3 @@
+v1
+{"batchWatermarkMs":1541716230487,"batchTimestampMs":1541716250031,"conf":{"spark.sql.shuffle.partitions":"200","spark.sql.streaming.stateStore.providerClass":"org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider"}}
+1022

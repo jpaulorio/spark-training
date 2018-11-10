@@ -21,21 +21,21 @@ object DatasetWriteExample extends Serializable {
 
     import spark.implicits._
 
-    val usersParquetDS = spark.read.parquet("../data/parquet/users/").as[User]
+    val usersParquetDS = spark.read.parquet("data/parquet/users/").as[User]
 
-    FileUtils.deleteQuietly(new File("../data/output"))
-
-    //----------------------------------------------------------------------------------------------//
-
-    usersParquetDS.write.parquet("../data/output/parquet/")
+    FileUtils.deleteQuietly(new File("data/output"))
 
     //----------------------------------------------------------------------------------------------//
 
-    usersParquetDS.write.csv("../data/output/csv/")
+    usersParquetDS.write.parquet("data/output/parquet/")
 
     //----------------------------------------------------------------------------------------------//
 
-    usersParquetDS.write.json("../data/output/json/")
+    usersParquetDS.write.csv("data/output/csv/")
+
+    //----------------------------------------------------------------------------------------------//
+
+    usersParquetDS.write.json("data/output/json/")
 
     while (true) {}
 

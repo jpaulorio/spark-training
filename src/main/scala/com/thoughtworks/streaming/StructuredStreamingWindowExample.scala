@@ -48,8 +48,8 @@ object StructuredStreamingWindowExample {
       wordCountsDF
       .writeStream
       .format("parquet")
-      .option("checkpointLocation", "../data/output/streaming-window/checkpoint")
-      .option("path", "../data/output/parquet/streaming-window")
+      .option("checkpointLocation", "data/output/streaming-window/checkpoint")
+      .option("path", "data/output/parquet/streaming-window")
       .outputMode(OutputMode.Complete())
       .queryName("WordCount")
       .start()

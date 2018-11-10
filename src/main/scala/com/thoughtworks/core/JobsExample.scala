@@ -11,7 +11,7 @@ object JobsExample extends Serializable {
 
     val spark = SparkSession
       .builder()
-//      .master("local")
+      .master("local")
       .appName("Data Engineering Capability Development")
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
@@ -27,6 +27,6 @@ object JobsExample extends Serializable {
 
     log.info(s"Users after filter ${filteredUsersDF.count()}")
 
-    //while (true) {}
+    while (true) {}
   }
 }

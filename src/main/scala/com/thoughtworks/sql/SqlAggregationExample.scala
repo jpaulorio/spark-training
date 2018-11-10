@@ -17,7 +17,7 @@ object SqlAggregationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    spark.read.parquet("../data/parquet/users-enhanced/")
+    spark.read.parquet("data/parquet/users-enhanced/")
       .createTempView("enhanced_users")
 
     //----------------------------------------------------------------------------------------------//

@@ -16,7 +16,7 @@ object DataFrameJoinExample extends Serializable {
     import spark.implicits._
     import org.apache.spark.sql.functions._
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     val ageSalaryDF = createAgeSalaryDataFrame(spark)
 

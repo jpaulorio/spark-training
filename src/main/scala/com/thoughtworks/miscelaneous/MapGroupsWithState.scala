@@ -56,12 +56,12 @@ object MapGroupsWithState extends Serializable {
 
     import org.apache.spark.sql.streaming.GroupStateTimeout
 
-    val static = spark.read.json("/Users/jsilva/spark-definitive-guide/data/activity-data")
+    val static = spark.read.json("/Users/jsilva/spark-definitive-guidata/activity-data")
     val streaming = spark
       .readStream
       .schema(static.schema)
       .option("maxFilesPerTrigger", 10)
-      .json("/Users/jsilva/spark-definitive-guide/data/activity-data")
+      .json("/Users/jsilva/spark-definitive-guidata/activity-data")
 
     val withEventTime = streaming
       .selectExpr("*", "cast(cast(Creation_Time as double)/1000000000 as timestamp) as event_time")

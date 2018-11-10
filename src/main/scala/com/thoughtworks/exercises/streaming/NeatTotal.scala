@@ -26,8 +26,8 @@ object NeatTotal {
 
     spark.udf.register("parseTimestampWithTimezone", DFUtils.parseTimestampWithTimezone(_: String): Long)
 
-//    FileUtils.deleteQuietly(new File("../data/output/streaming"))
-//    FileUtils.deleteQuietly(new File("../data/output/parquet/streaming"))
+//    FileUtils.deleteQuietly(new File("data/output/streaming"))
+//    FileUtils.deleteQuietly(new File("data/output/parquet/streaming"))
 
     val availableProducts = Product.getAvailableProducts()
 

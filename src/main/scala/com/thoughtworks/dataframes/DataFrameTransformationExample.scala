@@ -21,7 +21,7 @@ object DataFrameTransformationExample extends Serializable {
 
     spark.udf.register("startsWith", DFUtils.startsWith(_:String,_:String):Boolean)
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     //https://spark.apache.org/docs/2.3.1/api/sql/index.html
 

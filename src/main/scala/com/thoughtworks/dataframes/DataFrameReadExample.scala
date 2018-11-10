@@ -1,11 +1,6 @@
 package com.thoughtworks.dataframes
 
-import java.io.File
-
-import org.apache.commons.io.FileUtils
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
-import com.thoughtworks.utils.DFUtils
 
 object DataFrameReadExample extends Serializable {
   def main(args: Array[String]): Unit = {
@@ -19,7 +14,7 @@ object DataFrameReadExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     usersParquetDF.show()
 
@@ -29,25 +24,25 @@ object DataFrameReadExample extends Serializable {
       .option("header", true)
       .option("infer_schema", true)
       .option("delimiter", ";")
-      .csv("../data/csv/users/")
+      .csv("data/csv/users/")
 
     usersCSVDF.show()
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersJsonDF = spark.read.json("../data/json/users/")
+    val usersJsonDF = spark.read.json("data/json/users/")
 
     usersJsonDF.show()
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersGenericDF = spark.read.format("csv").load("../data/csv/users/")
+    val usersGenericDF = spark.read.format("csv").load("data/csv/users/")
 
     usersGenericDF.show()
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersGenericDF2 = spark.read.load("../data/csv/users/")
+    val usersGenericDF2 = spark.read.load("data/csv/users/")
 
     usersGenericDF2.show()
 

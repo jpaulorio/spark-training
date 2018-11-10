@@ -19,14 +19,14 @@ object DatasetCreationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersParquetDS = spark.read.parquet("../data/parquet/users/").as[User]
+    val usersParquetDS = spark.read.parquet("data/parquet/users/").as[User]
 
     usersParquetDS.show(false)
 
     //----------------------------------------------------------------------------------------------//
 
     val usersDF = spark.sparkContext
-      .textFile("../data/csv/users/")
+      .textFile("data/csv/users/")
       .map(_.split(";"))
       .map(attributes => User(attributes(0), attributes(1)))
       .toDS()
@@ -35,7 +35,7 @@ object DatasetCreationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersRDD = spark.sparkContext.textFile("../data/csv/users/")
+    val usersRDD = spark.sparkContext.textFile("data/csv/users/")
 
     val schemaString = "name company"
 

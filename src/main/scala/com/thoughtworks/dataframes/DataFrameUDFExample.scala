@@ -17,7 +17,7 @@ object DataFrameUDFExample extends Serializable {
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
 
-    val usersParquetDF = spark.read.parquet("../data/parquet/users/")
+    val usersParquetDF = spark.read.parquet("data/parquet/users/")
 
     //----------------------------------------------------------------------------------------------//
 

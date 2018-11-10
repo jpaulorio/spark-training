@@ -12,21 +12,21 @@ object SqlCreationExample extends Serializable {
       .config("spark.com.thoughtworks.sql.warehouse.dir", "/user/hive/warehouse")
       .getOrCreate()
 
-    spark.read.parquet("../data/parquet/users-enhanced/")
+    spark.read.parquet("data/parquet/users-enhanced/")
       .createTempView("enhanced_users")
 
     spark.sql("select * from enhanced_users")
 
     //----------------------------------------------------------------------------------------------//
 
-    spark.read.parquet("../data/parquet/users-enhanced/")
+    spark.read.parquet("data/parquet/users-enhanced/")
       .createOrReplaceTempView("enhanced_users")
 
     spark.sql("select * from enhanced_users").show(false)
 
     //----------------------------------------------------------------------------------------------//
 
-    spark.read.parquet("../data/parquet/users-enhanced/")
+    spark.read.parquet("data/parquet/users-enhanced/")
       .createGlobalTempView("enhanced_users_global")
 
     spark.sql("select * from global.enhanced_users_global").show(false)
@@ -41,7 +41,7 @@ object SqlCreationExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    newSparkSession.read.parquet("../data/parquet/users-enhanced/")
+    newSparkSession.read.parquet("data/parquet/users-enhanced/")
       .createOrReplaceGlobalTempView("enhanced_users")
 
     newSparkSession.sql("select * from global.enhanced_users_global").show(false)

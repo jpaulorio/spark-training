@@ -23,7 +23,7 @@ object DatasetTransformationExample extends Serializable {
 
     spark.udf.register("startsWith", DFUtils.startsWith(_: String, _: String): Boolean)
 
-    val usersParquetDS = spark.read.parquet("../data/parquet/users/").as[User]
+    val usersParquetDS = spark.read.parquet("data/parquet/users/").as[User]
 
     //----------------------------------------------------------------------------------------------//
 
