@@ -33,6 +33,8 @@ libraryDependencies ++= Seq(
 
   "org.apache.spark" %% "spark-hive" % sparkVersion % "provided",
 
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
+
   // spark packages
   "graphframes" % "graphframes" % "0.5.0-spark2.1-s_2.11",
 

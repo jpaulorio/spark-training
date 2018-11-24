@@ -42,7 +42,7 @@ object DataFrameReadExample extends Serializable {
 
     //----------------------------------------------------------------------------------------------//
 
-    val usersGenericDF2 = spark.read.load("data/csv/users/")
+    val usersGenericDF2 = spark.read.csv("data/csv/users/")
 
     usersGenericDF2.show()
 

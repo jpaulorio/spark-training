@@ -17,6 +17,7 @@ object SqlCreationExample extends Serializable {
 
     spark.sql("select * from enhanced_users")
 
+
     //----------------------------------------------------------------------------------------------//
 
     spark.read.parquet("data/parquet/users-enhanced/")
